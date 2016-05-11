@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+}
+<div class="min-height">
+    <h2>Admin Page</h2>
+
+    <div class="container text-center">
+        <div class="col-md-4">
+            <a class="layout-btn layout-btn-green" href="@Url.Action("Projects","Projects")"><h2>Create a Project<i class="fa fa-folder"></i></h2></a>
+        </div>
+        <div class="col-md-4">
+            <a class="layout-btn layout-btn-blue" href="@Url.Action("Tickets","Tickets")"><h2>Create a Ticket<i class="fa fa-ticket"></i></h2></a>
+        </div>
+        <div class="col-md-4">
+            <a class="layout-btn layout-btn-red" href="@Url.Action("Users","Admin")"><h2>Assign a Role<i class="fa fa-users"></i></h2></a>
+        </div>
+    </div>
+    <div class="container text-center">
+        <div class="col-md-4">
+            <a class="layout-btn layout-btn-green" href="@Url.Action("Index","TicketPriorities")"><h2>Ticket Priorities<i class="fa fa-tasks"></i></h2></a>
+        </div>
+        <div class="col-md-4">
+            <a class="layout-btn layout-btn-blue" href="@Url.Action("Index","TicketStatus")"><h2>Ticket Statuses<i class="fa fa-exclamation"></i></h2></a>
+        </div>
+        <div class="col-md-4">
+            <a class="layout-btn layout-btn-red" href="@Url.Action("Index","TicketTypes")"><h2>Ticket Types<i class="fa fa-list-ul"></i></h2></a>
+        </div>
+    </div>
+    <div class="container text-center">
+        <div class="col-md-4">
+            <a class="layout-btn layout-btn-green" href="@Url.Action("Projects","Projects")"><h2>Assign User to Project<i class="fa fa-user"></i></h2></a>
+        </div>
+        <div class="col-md-4">
+            <a class="layout-btn layout-btn-blue" href="@Url.Action("Index","TicketComments")"><h2>Ticket Comments<i class="fa fa-commenting-o"></i></h2></a>
+        </div>
+        <div class="col-md-4">
+            <a class="layout-btn layout-btn-red" href="@Url.Action("Index","TicketAttachments")"><h2>Ticket Attachments<i class="fa fa-file"></i></h2></a>
+        </div>
+    </div>
+</div>

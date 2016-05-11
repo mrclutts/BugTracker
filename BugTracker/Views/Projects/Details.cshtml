@@ -1,0 +1,146 @@
+﻿@model BugTracker.Models.Tracker_Models.Project
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+<div>
+    <h2> Project Summary</h2>
+    <hr />
+
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading proj-panel-blue">
+                    @Html.DisplayFor(model => model.Name)
+                </div>
+                <div class="panel-body">
+                    <p>
+                        <strong>@Html.DisplayNameFor(model => model.Description):</strong>
+                        @Html.DisplayFor(model => model.Description)
+                    </p>
+                    <p><strong>@Html.DisplayNameFor(model => model.Created):</strong>  @Html.DisplayFor(model => model.Created.LocalDateTime)</p>
+                    <p><strong>@Html.DisplayNameFor(model => model.EndDate):</strong>  @Html.DisplayFor(model => model.EndDate.LocalDateTime)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading proj-panel-green">
+                    Project Team
+                </div>
+                <div class="panel-body">
+                    <p>
+                        <strong>Project Manager: </strong>
+                        
+                        @if(!(ViewBag.ProjectManager == null))
+                        {                       
+                            @ViewBag.ProjectManager
+                        }
+                        @*@if (!(Model.ProjectManager == null))
+                        {
+                            @Html.DisplayFor(model => model.ProjectManager.DisplayName)
+                        }*@
+                    </p>
+                   
+                    <p>
+                        <strong>Team Members:</strong>
+                            
+                        @foreach (var user in Model.Users)
+                        {
+                            @user.DisplayName @Html.Raw("  ")
+                        }
+                    </p>
+                    <p>
+                        @if (User.IsInRole("Admin") || (User.IsInRole("ProjectManager")))
+                        {
+                            @Html.ActionLink("Assign Users to Project", "AssignUsers", new { id = Model.Id })
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+    <div class="clearfix"></div>
+    </div>
+
+<div class="col-md-12 proj-dets">
+    <div class="panel panel-primary">
+    <div class="panel-heading proj-panel-red text-center">
+        Tickets for @Model.Name
+    </div>
+    <div class="panel-body">
+
+
+        <div class="col-md-12">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Ticket
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Priority
+                        </th>
+                        <th>
+                            Assignee
+                        </th>
+                        <th>
+                            Owner
+                        </th>
+                        <th>
+                            Created
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ticket in Model.Tickets)
+                    {
+
+                        <tr>
+                            <td><a href="@Url.Action("Details", "Tickets", new { id = ticket.Id })">@ticket.Title</a></td>
+                            <td>@ticket.Description</td>
+                            <td>
+                                @if (ticket.TicketPriority.Name == "Essential")
+                                {
+                                    <i id="red-fa" class="fa fa-exclamation-triangle"></i>
+                                }
+                                else if (ticket.TicketPriority.Name == "Desirable")
+                                {
+                                    <i id="yellow-fa" class="fa fa-exclamation-circle"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-exclamation"></i>
+                                }
+                                @ticket.TicketPriority.Name
+                            </td>
+
+                            <td>
+                                @if (!(ticket.Assignee == null))
+                                {
+                                    @ticket.Assignee.DisplayName
+                                }
+                            </td>
+                            <td>@ticket.Owner.DisplayName</td>
+                            <td>@ticket.Created.LocalDateTime</td>
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+</div>
+    </div>
+    </div>
+<p> @if (User.IsInRole("Admin")) {
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+}
+    | @Html.ActionLink("Back to List", "Projects")
+</p>

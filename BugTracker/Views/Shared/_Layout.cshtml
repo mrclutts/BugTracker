@@ -1,0 +1,124 @@
+﻿
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="@Url.Content("~/favicon-binoculars.ico")" />
+    <title>@ViewBag.Title Bug Tracker</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/css/stylish-portfolio.css" rel="stylesheet" />
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <link href="~/css/magicsuggest-min.css" rel="stylesheet" />
+    <link href="~/css/datepicker.css" rel="stylesheet" />
+    <link href="~/css/datepicker3.css" rel="stylesheet" />
+    <link href="~/Content/DataTables/css/jquery.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/magnific-popup.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            @*<div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>*@
+            <div class="navbar-collapse collapse">
+                @*<ul class="nav navbar-nav menu">
+                    <li class="menu-item">@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString() == "Users" ? "active" : "")">@Html.ActionLink("Roles", "Users", "Admin")</li>
+                    <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString() == "Projects" ? "active" : "")">@Html.ActionLink("Projects", "Projects", "Projects")</li>
+                    
+                </ul>*@
+                
+                <div class="menu-item"> @Html.Partial("_LoginPartial")</div>
+                
+            </div>
+        </div>
+    </div>
+<div class="row equal">
+    <div class="col-xs-2 side-bar element">
+        <br /><br /><br />
+        <ul class="nav menu fixed-menu">
+            <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString() == "Dashboard" ? "active" : "")">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString() == "Projects" ? "active" : "")">@Html.ActionLink("My Projects", "Projects", "Projects")</li>
+            <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString() == "Tickets" ? "active" : "")">@Html.ActionLink("My Tickets", "Tickets", "Tickets")</li>
+
+            <li id="profile" class="menu-item parent">
+
+                <span class="layout-sub" data-toggle="collapse" href="#sub-item-1"><i class="fa fa-chevron-circle-down"><use xlink:href="#stroked-chevron-down"></use></i> Proflie</span>
+
+
+                <ul class="children collapse" id="sub-item-1">
+                    <li class="drop-down menu-item-2 @(ViewContext.RouteData.Values["Action"].ToString() == "Admin" ? "active" : "")">
+
+                        @Html.ActionLink("Change Display Name", "ChangeDisplayName", "Manage")
+
+                    </li>
+                    <li class="drop-down menu-item @(ViewContext.RouteData.Values["Action"].ToString() == "Admin" ? "active" : "")">
+                        @Html.ActionLink("Change Password", "ChangePassword", "Manage")
+
+                    </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="drop-down menu-item-2 @(ViewContext.RouteData.Values["Action"].ToString() == "Admin" ? "active" : "")">@Html.ActionLink("Admin Page", "Admin", "Admin")</li>
+                    }
+
+                    @*<li role="presentation" class="divider"></li>
+                        <li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Login Page</a></li>*@
+                </ul>
+
+        </ul>
+
+    </div><!--/.sidebar-->
+    <div class="col-xs-8 layout-margin element">
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="container text-center">
+                <div class="col-md-4">
+                    <a class="layout-btn layout-btn-green" href="@Url.Action("Projects", "Projects")"><h2>Projects<i class="fa fa-folder"></i></h2></a>
+                </div>
+                <div class="col-md-4">
+                    <a class="layout-btn layout-btn-blue" href="@Url.Action("Tickets", "Tickets")"><h2>Tickets<i class="fa fa-ticket"></i></h2></a>
+                </div>
+                <div class="col-md-4">
+                    <a class="layout-btn layout-btn-red" href="@Url.Action("Users", "Admin")"><h2>Users<i class="fa fa-users"></i></h2></a>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="container text-center">
+                <div class="col-md-6">
+                    <a class="layout-btn layout-btn-green" href="@Url.Action("Projects", "Projects")"><h2>Projects<i class="fa fa-folder"></i></h2></a>
+                </div>
+                <div class="col-md-6">
+                    <a class="layout-btn layout-btn-blue" href="@Url.Action("Tickets", "Tickets")"><h2>Tickets<i class="fa fa-ticket"></i></h2></a>
+                </div>
+            </div>
+        }
+        <div class="container-fluid body-content">
+
+            @RenderBody()
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-12 footer-layout">
+    <footer class="text-center">
+        <p>Designed and Built by <a href="mrclutts.azurewebsites.net">Matthew Clutts</a></p>
+    </footer>
+</div>
+
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            <!--DataTables-->
+            <script src="~/Scripts/DataTables/jquery.dataTables.js"></script>
+            <script>
+                $(".table").DataTable();
+            </script>
+
+            @RenderSection("scripts", required: false)
+

@@ -1,0 +1,328 @@
+﻿@model BugTracker.Models.Tracker_Models.Ticket
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+<div>
+    <h2>Details for @Model.Title</h2>
+    <p class="text-right">
+        @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager") || User.IsInRole("Developer"))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })} |
+        @Html.ActionLink("Back to List", "Tickets")
+    </p>
+    <hr />
+
+</div>
+<div class="panel panel-default">
+    <div class="panel-body tabs">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab1" data-toggle="tab">Ticket Details</a></li>
+            <li><a href="#tab2" data-toggle="tab">Leave a Comment</a></li>
+            <li><a href="#tab3" data-toggle="tab">Attachments</a></li>
+            <li><a href="#tab4" data-toggle="tab">Ticket History</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="tab1">
+                <h4>@Html.DisplayFor(model => model.Title)</h4>
+                <div class="col-md-6">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Description)
+                        </dd>
+                        <dt>
+                            Assignee
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Assignee.FirstName)
+                        </dd>
+
+                        <dt>
+                            Owner
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Owner.FirstName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Project.Name)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Project.Name)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Created)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Created)
+                        </dd>
+
+
+                    </dl>
+                </div>
+                <div class="col-md-6">
+
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.TicketPriority.Name)
+                        </dt>
+
+                        <dd>
+                            @if (Model.TicketPriority.Name == "Essential")
+                            {
+                                <i id="red-fa" class="fa fa-exclamation-triangle fa-lg"></i>
+                            }
+                            else if (Model.TicketPriority.Name == "Desirable")
+                            {
+                                <i id="yellow-fa" class="fa fa-exclamation-circle fa-lg"></i>
+                            }
+                            else
+                            {
+                                <i class="fa fa-exclamation fa-lg"></i>
+                            }
+                            @Html.DisplayFor(model => model.TicketPriority.Name)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.TicketStatus.Name)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.TicketStatus.Name)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.TicketType.Name)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.TicketType.Name)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Title)
+                        </dd>
+                        <dt>
+                            Last Updated:
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Updated)
+                        </dd>
+
+
+
+
+                    </dl>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="tab2">
+                
+                @using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="TicketId" value="@Model.Id">
+                    <div class="form-group">
+                        <textarea type="text" name="Description" class="form-control" rows="6" placeholder="Please enter a comment..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-default" />
+                    </div>
+                }
+            </div>
+            <div class="tab-pane fade" id="tab3">
+                <h4>Upload a File</h4>
+
+                @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="col-md-12">
+                        <input type="hidden" name="TicketId" value="@Model.Id">
+                        <div class="form-group">  
+                            
+                            <div class="col-md-12">
+                                 <input name="Description" placeholder="File Name..." type="text" class="form-control" /> 
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            
+                            <div class="col-md-12">
+                                <input name="image" type="file" class="form-control" id="fileUpload" />
+                            </div>
+                        </div>
+                       
+                        <div class="form-group">
+                            <div class="col-md-10">
+                                <input type="submit" value="Submit" class="btn btn-default" />
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    
+
+                }
+                <div class="clearfix"></div>
+                <hr />
+<div class="col-md-12">
+    <h4 class="text-center">Attachments:</h4>
+    @{int i = 0; }
+    @foreach (var attachment in Model.TicketAttachments)
+    {
+
+        <div class="panel-group attachment-pad">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <a class="parent-fa" data-toggle="collapse" href="#collapse1_@i">
+                            <i class="fa fa-chevron-down j-down"></i>
+                            <i class="fa fa-chevron-up j-up"></i>@attachment.Description
+                        </a>
+                    </h3>
+                    </div>
+                    <div id="collapse1_@i" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            
+                            @if (attachment.FileUrl != null)
+                            {
+                                <a href="@Url.Content(attachment.FileUrl)" class="image-link">
+                                    <img class="img-responsive" src="@Url.Content(attachment.FileUrl)" alt="" />
+                                </a>
+                            }
+                        </div>
+                        <div class="panel-footer">
+                            Uploaded by: @attachment.User.DisplayName on @attachment.Created.LocalDateTime
+                            @if (User.IsInRole("Admin") || (User.IsInRole("Project Manager")) || (User.Identity.Name == attachment.User.UserName))
+                            {
+                                <div class="text-right">
+                                    @Html.ActionLink("Edit","Edit", "TicketAttachments", new { id = attachment.Id }, null) ||
+                                    @Html.ActionLink("Delete", "Delete", "TicketAttachments", new { id = attachment.Id }, null)
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+          
+        i++;
+    }
+                </div>
+            </div>
+            <div class="tab-pane fade" id="tab4">
+                <table class="table stripe">
+                    <thead>
+                        <tr>
+                            <th>
+                                Property Changed
+                            </th>
+                            <th>
+                               Original Value
+                            </th>
+                            <th>
+                                New Value
+                            </th>
+                            <th>
+                               Date Changed
+                            </th>
+                            <th>
+                                Altered By
+                            </th>
+                            
+                                                      
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.TicketHistories)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Property
+                                </td>
+                                <td>
+                                    @item.OldValue
+                                </td>
+                                <td>
+                                    @item.NewValue
+                                </td>
+                                <td>
+                                    @item.Changed.LocalDateTime
+                                </td>
+                                <td>
+                                    @item.User.DisplayName
+                                </td>
+                                
+                                @*<td>
+                            @if (!(item.Updated == null))
+                            {
+                            @Html.DisplayFor(modelItem => item.Updated.Value.LocalDateTime)
+                            }
+                        </td>*@
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+    </div>
+</div><!--/.panel-->
+
+<div class="col-md-12">
+    @foreach (var comment in Model.TicketComments)
+    {
+        <div class="comment">
+            <p>Author: @comment.User.DisplayName || Created on: @comment.Created.LocalDateTime</p>
+            <p>@comment.Description</p>
+            @if (User.IsInRole("Admin") || (User.IsInRole("Project Manager"))||(User.Identity.Name == comment.User.UserName))
+            {
+                <div class="text-right">
+                    @Html.ActionLink("Edit", "Edit", "TicketComments", new { id = comment.Id }, null) ||
+                    @Html.ActionLink("Delete","Delete", "TicketComments", new { id = comment.Id },null)
+                </div>
+            }
+        </div>
+
+    }
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.magnific-popup.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".j-up").hide();
+            $('.parent-fa').click(function (event) {
+
+                var isDim = $(event.target).is('.parent-fa');
+                if (isDim) { 
+                    $('.j-down', this).toggle();
+                    $('.j-up', this).toggle();
+                }
+
+            });
+            ////MagnificPopup
+            $('.image-link').magnificPopup({ type: 'image' })         
+        });
+    </script>
+
+}
