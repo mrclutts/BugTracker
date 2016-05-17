@@ -154,14 +154,14 @@ hr.small {
     display: table;
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 750px;
     background-color: #1EBFAE;
     padding: 100px 0;
     color: #ffffff!important;
 
 
 }
-.header h1 {
+.heading{
     color:#ffffff;
     text-shadow: 0 0 5px #000000;
 }
@@ -169,12 +169,27 @@ hr.small {
 
 .about {
     padding: 50px 0;
+    background-color:#ffffff;
+    min-height: 600px;
 }
+.owl-theme .owl-dots .owl-dot span {
+    background-color: #0A5A9C!important;
+}
+.owl-theme .owl-dots .owl-dot span:hover {
+    background-color: #84ACCD!important;
+}
+.owl-theme .owl-dots .owl-dot.active span {
+    background-color: #84ACCD!important;
+}
+/*.owl-theme .owl-dots .owl-dot span {
+    background-color: #84ACCD!important;
+}*/
 
 /* Services */
 
 .services {
     padding: 50px 0;
+    min-height:600px;
 }
 
 .service-item {
@@ -199,6 +214,7 @@ hr.small {
 
 .portfolio {
     padding: 50px 0;
+    min-height: 600px;
 }
 
 .portfolio-item {
@@ -363,4 +379,76 @@ footer {
 }
 .min-height {
     min-height: 700px;
+    padding-bottom: 100px;
+}
+
+.attachment-file i{
+    font-size:4em;
+}
+.icon{
+    width: 200px!important;
+    height: 200px;
+    margin: 0 auto;
+}
+#logoutForm {
+    margin-bottom: 0!important;
+}
+.all-proj{
+    padding: 10px 5px;
+    background-color:#1EBFAE;
+    color: #ffffff;
+    margin-top:20px;
+    font-size: 16px;
+    font-weight: 600;
+}
+.all-proj:hover{
+    background-color: #ffffff;
+    border: 1px solid #1EBFAE;
+    color: #1EBFAE;
+}
+
+.all-tick {
+    padding: 10px 5px;
+    background-color:#0A5A9C;
+    color:#ffffff;
+    margin-top:20px;
+    font-size: 16px;
+    font-weight: 600;
+}
+.all-tick:hover{
+     background-color: #ffffff;
+    border: 1px solid #0A5A9C;
+    color: #0A5A9C;
+}
+.pad {
+    margin-top: 30px;
+}
+.padBottom {
+    padding-bottom: 20px;
+    padding-left: 0;
+}
+.col-height{
+    min-height:30px;
+}
+#preloader {
+	position: fixed;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background-color:#fff; /* change if the mask should have another color then white */
+	z-index:99999; /* makes sure it stays on top */
+}
+.font{
+    font-size:20px;
+    font-weight:400;
+    padding-bottom:7px;
+}
+.red {
+    color:#FF0000;
+
+}
+.foot-text{
+    font-size: 18px;
+    font-weight: 400;
 }

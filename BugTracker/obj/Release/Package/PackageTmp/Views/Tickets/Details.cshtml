@@ -11,8 +11,10 @@
     <p class="text-right">
         @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager") || User.IsInRole("Developer"))
         {
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })} |
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) @Html.Raw(" | ")
+        } 
         @Html.ActionLink("Back to List", "Tickets")
+        
     </p>
     <hr />
 
@@ -21,8 +23,12 @@
     <div class="panel-body tabs">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#tab1" data-toggle="tab">Ticket Details</a></li>
+@if ((User.IsInRole("Admin")) || (User.IsInRole("ProjectManager")) || (User.Identity.Name == Model.Owner.Email) || (User.Identity.Name == Model.Assignee.Email))
+{
             <li><a href="#tab2" data-toggle="tab">Leave a Comment</a></li>
+}
             <li><a href="#tab3" data-toggle="tab">Attachments</a></li>
+            <li><a href="#tab4" data-toggle="tab">Ticket History</a></li>
         </ul>
 
         <div class="tab-content">
@@ -131,6 +137,8 @@
                     </dl>
                 </div>
             </div>
+            @if ((User.IsInRole("Admin")) || (User.IsInRole("ProjectManager")) || (User.Identity.Name == Model.Owner.Email) || (User.Identity.Name == Model.Assignee.Email))
+            {
             <div class="tab-pane fade" id="tab2">
                 
                 @using (Html.BeginForm("Create", "TicketComments", FormMethod.Post))
@@ -143,40 +151,46 @@
                     <div class="form-group">
                         <input type="submit" value="Submit" class="btn btn-default" />
                     </div>
+
                 }
             </div>
-            <div class="tab-pane fade" id="tab3">
-                <h4>Upload a File</h4>
+            }
 
-                @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+            <div class="tab-pane fade" id="tab3">
+            @if ((User.IsInRole("Admin")) || (User.IsInRole("ProjectManager")) || (User.Identity.Name == Model.Owner.Email) || (User.Identity.Name == Model.Assignee.Email))
+            {
+                <h4>Upload a File</h4>
+                <div class="col-md-12">
+
+                    @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { enctype = "Multipart/form-data" }))
                 {
-                    @Html.AntiForgeryToken()
-                    <div class="col-md-12">
+                        @Html.AntiForgeryToken()
+
                         <input type="hidden" name="TicketId" value="@Model.Id">
-                        <div class="form-group">  
-                            
+                        <div class="form-group">
+
                             <div class="col-md-12">
-                                 <input name="Description" placeholder="File Name..." type="text" class="form-control" /> 
+                                <input name="Description" placeholder="File Name..." type="text" class="form-control" />
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
-                            
+
                             <div class="col-md-12">
                                 <input name="image" type="file" class="form-control" id="fileUpload" />
                             </div>
                         </div>
-                       
+
                         <div class="form-group">
                             <div class="col-md-10">
                                 <input type="submit" value="Submit" class="btn btn-default" />
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                    </div>
-                    
 
-                }
+                    }
+                </div>
+            }
                 <div class="clearfix"></div>
                 <hr />
 <div class="col-md-12">
@@ -196,13 +210,24 @@
                     </h3>
                     </div>
                     <div id="collapse1_@i" class="panel-collapse collapse">
-                        <div class="panel-body">
+                        <div class="panel-body text-center">
                             
                             @if (attachment.FileUrl != null)
                             {
-                                <a href="@Url.Content(attachment.FileUrl)" class="image-link">
+                                if (attachment.FileUrl.Contains(".pdf"))
+                                {
+                                    <a class="attachment-file" href="@Url.Content(attachment.FileUrl)" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+
+                                }
+                                else if (attachment.FileUrl.Contains(".docx") || (attachment.FileUrl.Contains(".doc")))
+                                {
+                                    <a href="@Url.Content(attachment.FileUrl)" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                                }
+                                else {
+                                <a href = "@Url.Content(attachment.FileUrl)" class="image-link">
                                     <img class="img-responsive" src="@Url.Content(attachment.FileUrl)" alt="" />
                                 </a>
+                                }
                             }
                         </div>
                         <div class="panel-footer">
@@ -223,6 +248,62 @@
         i++;
     }
                 </div>
+            </div>
+            <div class="tab-pane fade" id="tab4">
+                <table class="table stripe">
+                    <thead>
+                        <tr>
+                            <th>
+                                Property Changed
+                            </th>
+                            <th>
+                               Original Value
+                            </th>
+                            <th>
+                                New Value
+                            </th>
+                            <th>
+                               Date Changed
+                            </th>
+                            <th>
+                                Altered By
+                            </th>
+                            
+                                                      
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.TicketHistories)
+                            {
+                            <tr>
+                                <td>
+                                    @item.Property
+                                </td>
+                                <td>
+                                    @item.OldValue
+                                </td>
+                                <td>
+                                    @item.NewValue
+                                </td>
+                                <td>
+                                    @item.Changed.LocalDateTime
+                                </td>
+                                <td>
+                                    @item.User.DisplayName
+                                </td>
+
+                                @*<td>
+                            @if (!(item.Updated == null))
+                            {
+                            @Html.DisplayFor(modelItem => item.Updated.Value.LocalDateTime)
+                            }
+                        </td>*@
+                                
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                
             </div>
             <div class="clearfix"></div>
 

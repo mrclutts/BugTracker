@@ -81,7 +81,7 @@ namespace BugTracker.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Dashboard","Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -92,6 +92,9 @@ namespace BugTracker.Controllers
                     return View(model);
             }
         }
+
+
+        
 
         //GET: /GetCurrentDisplayName/Account 
         //For Login_Partial DisplayName 
@@ -174,6 +177,9 @@ namespace BugTracker.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var currentUser = UserManager.FindByName(user.UserName);
+
+                    var roleresult = UserManager.AddToRole(currentUser.Id, "Submitter");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

@@ -15,14 +15,14 @@ $(function() {
 $(function() {
     $('#easypiechart-red').easyPieChart({
         scaleColor: false,
-        barColor: '#f9243f'
+        barColor: '#D80041'
     });
 });
 
 $(function() {
    $('#easypiechart-blue').easyPieChart({
        scaleColor: false,
-       barColor: '#30a5ff'
+       barColor: '#0A5A9C'
    });
 });
 

@@ -107,6 +107,70 @@ namespace BugTracker.Migrations
                 var userId = userManager.FindByEmail("GeorgeWashington@whitehouse.gov").Id;
                 userManager.AddToRole(userId, "ProjectManager");
             }
+            if (!context.Users.Any(u => u.Email == "admin@swoop.com"))
+            {
+                var userManager = new UserManager<ApplicationUser>(
+                new UserStore<ApplicationUser>(context));
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "admin@swoop.com",
+                    Email = "admin@swoop.com",
+                    FirstName = "Admin",
+                    LastName = "Mr. Swoop",
+                    DisplayName = "Guest Admin"
+                }, "Potato99!");
+
+                var userId = userManager.FindByEmail("admin@swoop.com").Id;
+                userManager.AddToRole(userId, "Admin");
+            }
+            if (!context.Users.Any(u => u.Email == "projectmanager@swoop.com"))
+            {
+                var userManager = new UserManager<ApplicationUser>(
+                new UserStore<ApplicationUser>(context));
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "projectmanager@swoop.com",
+                    Email = "projectmanager@swoop.com",
+                    FirstName = "Project",
+                    LastName = "Manager",
+                    DisplayName = "Guest PM"
+                }, "Potato99!");
+
+                var userId = userManager.FindByEmail("projectmanager@swoop.com").Id;
+                userManager.AddToRole(userId, "ProjectManager");
+            }
+            if (!context.Users.Any(u => u.Email == "developer@swoop.com"))
+            {
+                var userManager = new UserManager<ApplicationUser>(
+                new UserStore<ApplicationUser>(context));
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "developer@swoop.com",
+                    Email = "developer@swoop.com",
+                    FirstName = "Developer",
+                    LastName = "Developer",
+                    DisplayName = "Guest Developer"
+                }, "Potato99!");
+
+                var userId = userManager.FindByEmail("developer@swoop.com").Id;
+                userManager.AddToRole(userId, "Developer");
+            }
+            if (!context.Users.Any(u => u.Email == "submitter@swoop.com"))
+            {
+                var userManager = new UserManager<ApplicationUser>(
+                new UserStore<ApplicationUser>(context));
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "submitter@swoop.com",
+                    Email = "submitter@swoop.com",
+                    FirstName = "Submitter",
+                    LastName = "Submitter",
+                    DisplayName = "Guest Submitter"
+                }, "Potato99!");
+
+                var userId = userManager.FindByEmail("submitter@swoop.com").Id;
+                userManager.AddToRole(userId, "Submitter");
+            }
         }
     }
 }

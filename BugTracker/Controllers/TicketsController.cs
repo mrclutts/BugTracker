@@ -113,7 +113,8 @@ namespace BugTracker.Controllers
 
                 ticket.TicketStatusId = db.TicketStatus.FirstOrDefault(x => x.Name == "Open").Id;
                 //ticket.TicketStatusId = db.TicketStatus.Where(x => x.Name == "Open").Select(i=>i.Id).First();
-
+                ProjectsHelper pjhelp = new ProjectsHelper();
+                pjhelp.AddUserToProject(user.Id, ticket.ProjectId);
                 db.Ticket.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Tickets");
@@ -162,6 +163,7 @@ namespace BugTracker.Controllers
                 var changed = System.DateTimeOffset.Now;
                 var editId = Guid.NewGuid().ToString();
                 var oldTic = db.Ticket.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
+                var project = ticket.ProjectId;
 
                 if(oldTic?.Title != ticket.Title)
                 {
@@ -192,16 +194,27 @@ namespace BugTracker.Controllers
                 
                 if (oldTic?.AssigneeId != ticket.AssigneeId)
                 {
-
+                    string oldAssignee = "";
+                    if(oldTic.AssigneeId != null){
+                        oldAssignee = oldTic?.Assignee.DisplayName;
+                    }
+                    else
+                    {
+                        oldAssignee = null;
+                    }
+                    string newAssignee = db.Users.Find(ticket.AssigneeId).DisplayName;
                     TicketHistory th3 = new TicketHistory
                     {
                         TicketId = ticket.Id,
                         Property = "Assignee",
-                        OldValue = oldTic?.Assignee.DisplayName,
-                        NewValue = db.Users.Find(ticket.AssigneeId).DisplayName,
+                        OldValue = oldAssignee,
+                        NewValue = newAssignee,
                         Changed = changed,
                         UserId = userid
                     };
+                    ProjectsHelper pjhelp = new ProjectsHelper();
+                    pjhelp.AddUserToProject(ticket.AssigneeId, ticket.ProjectId);
+                    
                     db.TicketHistory.Add(th3);
                 }
                 if (oldTic?.TicketTypeId != ticket.TicketTypeId)
@@ -252,9 +265,7 @@ namespace BugTracker.Controllers
                     db.TicketHistory.Add(th6);
                 }
 
-
-
-
+                
 
                 //db.Entry(ticket).State = EntityState.Modified;
                 db.Ticket.Attach(ticket);
@@ -269,15 +280,16 @@ namespace BugTracker.Controllers
                 db.SaveChanges();
 
                 
+
                 EmailService es = new EmailService();
                 IdentityMessage im = new IdentityMessage();
                 im.Subject = $"You have been assigned to {ticket.Title}";
                 im.Destination = db.Users.Find(ticket.AssigneeId).Email;
                 var callbackUrl = Url.Action("Details", "Tickets", new { id = ticket.Id }, protocol: Request.Url.Scheme);
-                im.Body = ticket.Description + "View the ticket here: <a href=\"" + callbackUrl + "\">here!</a>";
+                im.Body = "Hi " + ticket.Assignee.DisplayName + "," + "<br/> A ticket in your queue has been edited! Details Below:<br/>" + ticket.Description + "View the ticket here: <a href=\"" + callbackUrl + "\">here!</a>";
                 await es.SendAsync(im);
 
-                return RedirectToAction("Tickets");
+                return RedirectToAction("Details", "Tickets", new { id = ticket.Id });
             }
             ViewBag.AssigneeId = new SelectList(db.Users, "Id", "FirstName", ticket.AssigneeId);
             ViewBag.OwnerId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerId);

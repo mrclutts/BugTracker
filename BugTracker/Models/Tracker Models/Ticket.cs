@@ -24,7 +24,6 @@ namespace BugTracker.Models.Tracker_Models
 
         public virtual ICollection<TicketNotification> TicketNotifications { get; set; }
 
-
         public int Id { get; set; }
 
         public string Title { get; set; }
@@ -51,10 +50,8 @@ namespace BugTracker.Models.Tracker_Models
         [Display(Name = "Assignee")]
         public string AssigneeId { get; set; }
 
-        [Display(Name = "Assignee")]
         public virtual ApplicationUser Assignee { get; set; }
-
-        [Display(Name = "Owner")]
+       
         public virtual ApplicationUser Owner { get; set; }
 
         public virtual TicketStatus TicketStatus { get; set; }

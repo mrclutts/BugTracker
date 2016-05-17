@@ -65,20 +65,33 @@ namespace BugTracker.Controllers
                     return false;
                 try
                 {
-                    using (var img = Image.FromStream(file.InputStream))
-                    {
-                        return ImageFormat.Jpeg.Equals(img.RawFormat) ||
-                            ImageFormat.Png.Equals(img.RawFormat) ||
-                            ImageFormat.Gif.Equals(img.RawFormat);
+                    var ext = Path.GetExtension(file.FileName).ToLower();
+                    if (file.ContentType.Contains("image")) {
+                        using (var img = Image.FromStream(file.InputStream))
+                        {
+                            return ImageFormat.Jpeg.Equals(img.RawFormat) ||
+                                ImageFormat.Png.Equals(img.RawFormat) ||
+                                ImageFormat.Gif.Equals(img.RawFormat);
+                        }
                     }
+                    else {
+                        if((ext == ".docx") || (ext == ".doc") || (ext == ".pdf"))
+                        {
+                            return true;
+                        };
+                        return false;
+                    }
+
+
                 }
-                catch
+                catch(Exception e)
                 {
                     return false;
                 }
             }
         }
-
+    
+    
 
         // POST: TicketAttachments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -104,9 +117,9 @@ namespace BugTracker.Controllers
                 EmailService es = new EmailService();
                 IdentityMessage im = new IdentityMessage();
                 im.Subject = $"New Attachment - {ticketAttachment.Description}";
-                im.Destination = db.Users.Find(ticketAttachment.UserId).Email;
+                im.Destination = db.Ticket.Find(ticketAttachment.TicketId).Assignee.Email;
                 var callbackUrl = Url.Action("Details", "Tickets", new { id = ticketAttachment.TicketId }, protocol: Request.Url.Scheme);
-                im.Body = ticketAttachment.Description + "View the ticket here: <a href=\"" + callbackUrl + "\">here!</a>";
+                im.Body = "A user has added an attachment on a ticket in your queue. <br/>" + ticketAttachment.Description + "View the ticket here: <a href=\"" + callbackUrl + "\">here!</a>";
                 await es.SendAsync(im);
 
                 return RedirectToAction("Details", "Tickets", new { id = ticketAttachment.TicketId });
@@ -160,9 +173,9 @@ namespace BugTracker.Controllers
                 EmailService es = new EmailService();
                 IdentityMessage im = new IdentityMessage();
                 im.Subject = $"Updated Attachment for {ticketAttachment.Description}";
-                im.Destination = db.Users.Find(ticketAttachment.UserId).Email;
+                im.Destination = db.Ticket.Find(ticketAttachment.TicketId).Assignee.Email;
                 var callbackUrl = Url.Action("Details", "Tickets", new { id = ticketAttachment.TicketId }, protocol: Request.Url.Scheme);
-                im.Body = ticketAttachment.Description + "View the ticket here: <a href=\"" + callbackUrl + "\">here!</a>";
+                im.Body = "A user has edited an attachment on a ticket in your queue. <br/>" + ticketAttachment.Description + "View the ticket here: <a href=\"" + callbackUrl + "\">here!</a>";
                 await es.SendAsync(im);
 
                 return RedirectToAction("Details", "Tickets", new { id = ticketAttachment.TicketId });

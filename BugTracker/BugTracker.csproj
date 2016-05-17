@@ -252,6 +252,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\animate %281%29.css" />
+    <Content Include="Content\animate.css" />
+    <Content Include="Content\animate.min.css" />
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-select.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -365,6 +368,8 @@
     <Content Include="Content\DataTables\swf\flashExport.swf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\magnific-popup.css" />
+    <Content Include="Content\owl.carousel.css" />
+    <Content Include="Content\owl.theme.default.min.css" />
     <Content Include="css\animate.css" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\font-awesome.min.css" />
@@ -377,12 +382,20 @@
     <Content Include="css\datepicker.css" />
     <Content Include="css\datepicker3.css" />
     <Content Include="css\styles.css" />
-    <Content Include="favicon-binoculars.ico" />
+    <Content Include="favicon %281%29.ico" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\Icons\css3-02.png" />
+    <Content Include="img\Icons\dbs-sqlserver.png" />
+    <Content Include="img\Icons\html5-02.png" />
+    <Content Include="img\Icons\prog-aspnet.png" />
+    <Content Include="img\Icons\prog-csharp.png" />
+    <Content Include="img\Icons\prog-jquery.png" />
+    <Content Include="img\Icons\prog-js01.png" />
+    <Content Include="img\rsz_swoop.png" />
     <Content Include="js\bootstrap-datepicker.js" />
     <Content Include="js\bootstrap-table.js" />
     <Content Include="js\chart-data.js" />
@@ -390,9 +403,12 @@
     <Content Include="js\easypiechart-data.js" />
     <Content Include="js\easypiechart.js" />
     <Content Include="js\html5shiv.min.js" />
+    <Content Include="js\jquery.easing.min.js" />
     <Content Include="js\looper.min.js" />
     <Content Include="js\lumino.glyphs.js" />
+    <Content Include="js\owl.carousel.js" />
     <Content Include="js\respond.min.js" />
+    <Content Include="js\wow.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
@@ -719,6 +735,7 @@
     <Content Include="Views\TicketAttachments\Index.cshtml" />
     <Content Include="Views\Tickets\AllTickets.cshtml" />
     <Content Include="Views\Projects\AllProjects.cshtml" />
+    <Content Include="Views\Admin\UnassignedUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

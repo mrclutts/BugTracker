@@ -141,6 +141,7 @@
     </div>
 <p> @if (User.IsInRole("Admin")) {
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+    @Html.Raw(" | ")
 }
-    | @Html.ActionLink("Back to List", "Projects")
+     @Html.ActionLink("Back to List", "Projects")
 </p>

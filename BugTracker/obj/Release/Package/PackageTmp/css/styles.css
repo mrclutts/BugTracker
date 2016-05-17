@@ -343,10 +343,10 @@ a.bg-danger:hover {
 	text-decoration: none;
 }
 
-.panel-blue { background: #30a5ff; color: #fff; }
+.panel-blue { background: #0A5A9C; color: #fff; }
 .panel-teal { background: #1ebfae; color: #fff; }
 .panel-orange { background: #ffb53e; color: #fff; }
-.panel-red { background: #f9243f; color: #fff; }
+.panel-red { background: #D80041; color: #fff; }
 
 .panel-blue .panel-body p,
 .panel-teal .panel-body p,
@@ -376,7 +376,7 @@ a.bg-danger:hover {
 }
 
 .widget-left {
-	height: 80px;
+	height: 110px;
 	padding-top: 15px;
 	text-align: center;
 	border-top-left-radius: 4px;
@@ -388,7 +388,7 @@ a.bg-danger:hover {
 	line-height: 1.6em;
 	margin: 0px;
 	padding: 20px;
-	height: 80px;
+	height: 110px;
 	color: #999;
 	font-weight: 300;
 	background: #fff;
@@ -424,10 +424,10 @@ a.bg-danger:hover {
 	color: #5f6468;
 }
 
-.panel-blue .widget-left { background: #30a5ff; color: #fff; }
+.panel-blue .widget-left { background: #0A5A9C; color: #fff; }
 .panel-teal .widget-left { background: #1ebfae; color: #fff; }
 .panel-orange .widget-left { background: #ffb53e; color: #fff; }
-.panel-red .widget-left { background: #f9243f; color: #fff; }
+.panel-red .widget-left { background: #D80041; color: #fff; }
 
 .panel-widget {
 	background: #fff;
@@ -697,10 +697,10 @@ h1.page-header {
 	width: 120px;
 }
 
-#easypiechart-blue .percent { color: #30a5ff;}
+#easypiechart-blue .percent { color: #0A5A9C;}
 #easypiechart-teal .percent { color: #1ebfae;}
 #easypiechart-orange .percent { color: #ffb53e;}
-#easypiechart-red .percent { color: #ef4040;}
+#easypiechart-red .percent { color: #D80041;}
 
 /*Calendar Widget*/
 

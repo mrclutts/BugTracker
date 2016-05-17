@@ -3,12 +3,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="@Url.Content("~/favicon-binoculars.ico")" />
+    <link rel="icon" href="@Url.Content("~/favicon (1).ico")" />
     <title>@ViewBag.Title Bug Tracker</title>
     @Styles.Render("~/Content/css")
 
     <link href="~/css/stylish-portfolio.css" rel="stylesheet" />
     <link href="~/css/styles.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/owl.carousel.css" rel="stylesheet" />
+    <link href="~/Content/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="~/Content/animate (1).css" rel="stylesheet" />
+    <link href="~/css/Looper.css" rel="stylesheet" />
+
+    <link href="~/css/styles.css" rel="stylesheet" />
+
     @Scripts.Render("~/bundles/modernizr")
     
 </head>
@@ -35,10 +43,15 @@
     </div>
     <div class="body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            
-        </footer>
+        <div id="preloader">
+            <div id="status"></div>
+        </div>
+        
+        <div class="col-md-12 footer-layout">
+            <footer class="text-center">
+                <p>Designed and Built by <a href="mrclutts.azurewebsites.net">Matthew Clutts</a></p>
+            </footer>
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

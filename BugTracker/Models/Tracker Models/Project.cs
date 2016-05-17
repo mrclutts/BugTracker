@@ -25,14 +25,8 @@ namespace BugTracker.Models.Tracker_Models
 
         public string Description { get; set; }
 
-        //public string ProjectManagerId { get; set; }
-
         public virtual ICollection<ApplicationUser> Users { get; set; }
 
         public virtual ICollection<Ticket> Tickets { get; set; }
-
-        //[Display(Name = "ProjectManager")]
-        //public virtual ApplicationUser ProjectManager { get; set; }
-
     }
 }

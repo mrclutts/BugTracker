@@ -1,7 +1,7 @@
 ﻿
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="@Url.Content("~/favicon-binoculars.ico")" />
+    <link rel="icon" href="@Url.Content("~/favicon (1).ico")" />
     <title>@ViewBag.Title Bug Tracker</title>
     @Styles.Render("~/Content/css")
     <link href="~/css/font-awesome.min.css" rel="stylesheet" />
@@ -42,7 +42,7 @@
     <div class="col-xs-2 side-bar element">
         <br /><br /><br />
         <ul class="nav menu fixed-menu">
-            <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString() == "Dashboard" ? "active" : "")">@Html.ActionLink("Home", "Index", "Home")</li>
+            <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString() == "Dashboard" ? "active" : "")">@Html.ActionLink("Home", "Dashboard", "Home")</li>
             <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString() == "Projects" ? "active" : "")">@Html.ActionLink("My Projects", "Projects", "Projects")</li>
             <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString() == "Tickets" ? "active" : "")">@Html.ActionLink("My Tickets", "Tickets", "Tickets")</li>
 
@@ -99,7 +99,7 @@
                 </div>
             </div>
         }
-        <div class="container-fluid body-content">
+        <div class="container-fluid body-content min-height">
 
             @RenderBody()
         </div>

@@ -36,6 +36,24 @@ namespace BugTracker.Controllers
             return View(model);
         }
 
+        //Get Users/Index
+        //public ActionResult UnassignedUsers()
+        //{
+        //    UserRolesHelper helper = new UserRolesHelper(db);
+        //    List<RoleAdminViewModel> model = new List<RoleAdminViewModel>();
+        //    foreach (var user in db.Users.ToList())
+        //    {
+        //        RoleAdminViewModel RoleModel = new RoleAdminViewModel();
+        //        if (helper.ListUserRoles(user.Id).ToList() == null)
+        //        {
+        //            RoleModel.Role = helper.ListUserRoles(user.Id).ToList();
+        //        }
+        //        RoleModel.User = user;
+        //        model.Add(RoleModel);
+        //    }
+        //    return View(model);
+        //}
+
         //Get Edit/UserRole
         public ActionResult EditUser(string id)
         {

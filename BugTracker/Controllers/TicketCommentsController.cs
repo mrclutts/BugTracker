@@ -65,9 +65,9 @@ namespace BugTracker.Controllers
                 EmailService es = new EmailService();
                 IdentityMessage im = new IdentityMessage();
                 im.Subject = $"Updated Attachment for {ticketComment.Description}";
-                im.Destination = db.Users.Find(ticketComment.UserId).Email;
+                im.Destination = db.Ticket.Find(ticketComment.TicketId).Assignee.Email;
                 var callbackUrl = Url.Action("Details", "Tickets", new { id = ticketComment.TicketId }, protocol: Request.Url.Scheme);
-                im.Body = ticketComment.Description + "View the ticket here: <a href=\"" + callbackUrl + "\">here!</a>";
+                im.Body = "Hi " + ticketComment.Ticket.Assignee.DisplayName + ",<br/>" + ticketComment.User.DisplayName + " has made a comment on a ticket in your queue." + ticketComment.Description + "View the ticket here: <a href=\"" + callbackUrl + "\">here!</a>";
                 await es.SendAsync(im);
 
                 return RedirectToAction("Details", "Tickets", new { id = ticketComment.TicketId });
@@ -113,9 +113,9 @@ namespace BugTracker.Controllers
                 EmailService es = new EmailService();
                 IdentityMessage im = new IdentityMessage();
                 im.Subject = $"Updated Attachment for {ticketComment.Description}";
-                im.Destination = db.Users.Find(ticketComment.UserId).Email;
+                im.Destination = db.Ticket.Find(ticketComment.TicketId).Assignee.Email;
                 var callbackUrl = Url.Action("Details", "Tickets", new { id = ticketComment.TicketId }, protocol: Request.Url.Scheme);
-                im.Body = ticketComment.Description + "View the ticket here: <a href=\"" + callbackUrl + "\">here!</a>";
+                im.Body = "A user has edited a comment on a ticket in your queue. <br/>" + ticketComment.Description + "View the ticket here: <a href=\"" + callbackUrl + "\">here!</a>";
                 await es.SendAsync(im);
 
                 return RedirectToAction("Details", "Tickets", new { id = ticketComment.TicketId });
